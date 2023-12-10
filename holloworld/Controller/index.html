@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="./jquery.js"></script>
+<style>
+    body {
+        display: flex;
+        background-color: antiquewhite;
+    }
+
+    .box {
+
+        border: 1px solid black;
+        margin: auto;
+    }
+
+    table {
+        text-align: center;
+        width: 500px;
+
+    }
+
+    thead {
+        width: 300px;
+    }
+    img{
+        width: 50px;
+        height: 30px;
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div id="xuan">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>车名</th>
+                        <th>图片</th>
+                        <th>颜色</th>
+                        <th>价格</th>
+                        <th>时间</th>
+                        <th>管理</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            xuanran()
+        })
+        function xuanran() {
+            $.ajax({
+                url: "http://localhost:3000/api/user/",
+                type: "GET",
+                success: function (res) {
+                    console.log(res);
+                    var html = '';
+                    let pse = res.data
+                    console.log(pse);
+                    pse.forEach(function (item, index) {
+                        html += `
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td><img src="${item.img}" alt=""></td>
+                        <td>${item.color}</td>
+                        <td>${item.manei}</td>
+                        <td>${item.time}</td>
+                        <td><button data-id="${item.id}">删除</button></td>
+                    </tr>
+                `;
+                    });
+
+                    $("tbody").html(html);
+                },
+            });
+        }
+
+
+
+    </script>
+</body>
+
+</html>
