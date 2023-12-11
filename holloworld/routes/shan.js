@@ -2,9 +2,15 @@ var express = require('express');
 
 var router = express.Router();
 const carController = require('../Controller/car');
-router.get('/user/', carController.userlist);
-router.get('/user/del', carController.deleteUser);
-// router.get('/user/xouser', carController.xouser);
-router.post('/user/tianser', carController.tianser);
-router.get('/user/xiangqing', carController.xiangqing);
+// 列表
+router.get('/caroutside/', carController.read);
+// 删除
+router.get('/caroutside/del', carController.deleteUser);
+// 修改
+// router.get('/user/modify', carController.modify);
+// 添加
+router.post('/caroutside/increase', carController.increase);
+// 详情
+router.get('/caroutside/detail', carController.detail);
+
 module.exports = router;

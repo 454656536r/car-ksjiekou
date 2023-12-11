@@ -50,4 +50,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-console.log('成功 http://localhost:3000/api/user/');
+console.log('成功 http://localhost:3000/api/caroutside/');
