@@ -1,7 +1,28 @@
 {
-    "data":[
+    "data": [
         {
-            "name":"123"
+            "id": "1",
+            "name": "宝马",
+            "img": "https://www.bmw.com.cn/content/dam/bmw/marketCN/bmw_com_cn/model_card/F52_2022.png",
+            "color": "red",
+            "manei": "20",
+            "time": "2023/12/8"
+        },
+        {
+            "id": "2",
+            "name": "奔驰",
+            "img": "https://www.bmw.com.cn/content/dam/bmw/marketCN/bmw_com_cn/model_card/2_series_coupe_2021.png",
+            "color": "red",
+            "manei": "20",
+            "time": "2023/12/8"
+        },
+        {
+            "id": "3",
+            "name": "宝马M50",
+            "img": "https://e-images.bmw-emall.cn/de077b04-2bcf-46b6-b70d-3de9b0fcc186",
+            "color": "pink",
+            "manei": "122",
+            "time": "2023/12/8"
         }
     ]
 }

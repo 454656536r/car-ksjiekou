@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <script src="./jquery.js"></script>
+<link href="//unpkg.com/layui@2.9.0/dist/css/layui.css" rel="stylesheet">
+<script src="//unpkg.com/layui@2.9.0/dist/layui.js"></script>
 <style>
     body {
         display: flex;
@@ -14,54 +16,148 @@
     }
 
     .box {
-
         border: 1px solid black;
         margin: auto;
+        padding: 10px;
     }
 
     table {
         text-align: center;
-        width: 500px;
+        width: 1400px;
 
     }
 
     thead {
         width: 300px;
+        /* margin: 10px; */
     }
-    img{
-        width: 50px;
-        height: 30px;
+
+    img {
+        width: 65px;
+        height: 40px;
+    }
+
+    .layui-btn {
+        width: 70px;
+        height: 35px;
+        margin: 5px;
+        border-radius: 5px;
+    }
+
+    input {
+        height: 25px;
+        margin-left: 10px;
+        margin-top: 10px;
+    }
+
+    .layui-btn {
+        width: 70px;
+        height: 35px;
+        margin: 12px;
+        border-radius: 5px;
     }
 </style>
 
 <body>
-    <div class="box">
-        <div id="xuan">
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>编号</th>
-                        <th>车名</th>
-                        <th>图片</th>
-                        <th>颜色</th>
-                        <th>价格</th>
-                        <th>时间</th>
-                        <th>管理</th>
-                    </tr>
-                </thead>
-                <tbody>
 
-                </tbody>
-            </table>
+    <div class="box">
+        <h1 style="text-align: center;">汽车列表</h1>
+        <input type="text" placeholder="&nbsp;ID" id="id">
+        <input type="text" placeholder="&nbsp;车名" id="name">
+        <input type="text" placeholder="&nbsp;图片" id="img">
+        <input type="text" placeholder="&nbsp;颜色" id="color">
+        <input type="text" placeholder="&nbsp;价格" id="manei">
+        <input type="text" placeholder="&nbsp;时间" value="2023/12/8" id="time">
+        <button type="button" id="tian" class="layui-btn layui-btn-normal layui-btn-radius">添加</button>
+        <div class="layui-form-item" style="margin-top: 10px;">
+            <div class="layui-input-group">
+                <input type="text" placeholder="模糊搜索" class="layui-input">
+                <div class="layui-input-suffix">
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-radius">搜索</button>
+                </div>
+            </div>
         </div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>车名</th>
+                    <th>图片</th>
+                    <th>颜色</th>
+                    <th>价格</th>
+                    <th>时间</th>
+                    <th>管理</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+
     </div>
     <script>
+        var url = "http://localhost:3000/api/user/"
         $(function () {
             xuanran()
+            $("tbody").click(dianjifun)
         })
+        $("#tian").click(function () {
+            let id = $("#id").val()
+            let name = $("#name").val()
+            let img = $("#img").val()
+            let color = $("#color").val()
+            let manei = $("#manei").val()
+            let time = $("#time").val()
+            let data = {
+                'id': id,
+                "name": name,
+                "img": img,
+                "color": color,
+                "manei": manei,
+                "time": time,
+            }
+            console.log(data);
+            $.ajax({
+                url: url + 'tianser',
+                type: 'post',
+                data: data,
+                success: function (data) {
+                    console.log(JSON.stringify(data).data);
+                }
+            })
+        })
+        // 删除
+        function dianjifun() {
+            event.preventDefault();
+            if (event.target.tagName == 'BUTTON') {
+                if (event.target.innerHTML == "删除") {
+                    id = event.target.dataset.id
+                    console.log(id);
+                    $.ajax({
+                        url: url + "del?id=" + id,
+                        type: "get",
+                        success: function (res) {
+                            xuanran();
+                        },
+                    });
+                }
+            }
+            // 详情
+            if (event.target.innerHTML == "查看") {
+                id = event.target.dataset.id
+                console.log(id);
+                $.ajax({
+                    url: url + 'xiangqing?id=' + id,
+                    type: 'get',
+                    success: function () {
+                        xuanran();
+                    }
+                })
+            }
+        }
         function xuanran() {
             $.ajax({
-                url: "http://localhost:3000/api/user/",
+                url: "duqu.json",
                 type: "GET",
                 success: function (res) {
                     console.log(res);
@@ -75,9 +171,13 @@
                         <td>${item.name}</td>
                         <td><img src="${item.img}" alt=""></td>
                         <td>${item.color}</td>
-                        <td>${item.manei}</td>
+                        <td>${item.manei}W</td>
                         <td>${item.time}</td>
-                        <td><button data-id="${item.id}">删除</button></td>
+                        <td>
+                            <button type="button" data-id="${item.id}" class="layui-btn layui-btn-normal layui-btn-radius">删除</button>
+                            <button type="button" data-id="${item.id}" class="layui-btn layui-btn-radius">查看</button>
+                            <button type="button" data-id="${item.id}" class="layui-btn layui-btn-warm layui-btn-radius">编辑</button>
+                        </td>
                     </tr>
                 `;
                     });
