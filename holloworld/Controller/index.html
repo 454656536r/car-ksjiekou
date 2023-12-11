@@ -89,7 +89,7 @@
 
     <div class="box">
         <h1 style="text-align: center;">汽车列表</h1>
-        <input type="text" placeholder="&nbsp;ID" id="id">
+        <input type="text" placeholder="&nbsp;输入数字ID" id="id">
         <input type="text" placeholder="&nbsp;车名" id="name">
         <input type="text" placeholder="&nbsp;图片" id="img">
         <input type="text" placeholder="&nbsp;颜色" id="color">
@@ -121,9 +121,11 @@
             </tbody>
         </table>
         <div id="dialog" class="dialog">
-            
+
             <div class="dialog-content">
-                <button onclick="closeDialog()" style="float: right; border: none;"><h2 style="background-color: white;">×</h2></button>
+                <button onclick="closeDialog()" style="float: right; border: none;">
+                    <h2 style="background-color: white;">×</h2>
+                </button>
                 <h2 style="text-align: center;">汽车详情</h2>
                 <ul id="xiang">
 
@@ -137,6 +139,12 @@
             xuanran()
             $("tbody").click(dianjifun)
         })
+        var idInput = document.getElementById("id");
+
+        idInput.addEventListener("input", function () {
+            var regex = /[^0-9]/g; // 只允许数字
+            this.value = this.value.replace(regex, "");
+        });
         $("#tian").click(function () {
             let id = $("#id").val()
             let name = $("#name").val()

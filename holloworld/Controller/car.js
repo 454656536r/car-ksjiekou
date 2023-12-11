@@ -43,7 +43,7 @@ const detail = (req, res) => {
   const id = req.url.split('?')[1].split('=')[1]
   console.log(id);
   let data = JSON.parse(deleat())
-console.log(data);
+  console.log(data);
   let datale = data.data.find((item) => item.id == id)
   if (!datale) {
     res.statusCode == 200;
