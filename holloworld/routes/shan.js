@@ -7,7 +7,7 @@ router.get('/caroutside/', carController.read);
 // 删除
 router.get('/caroutside/del', carController.deleteUser);
 // 修改
-// router.get('/user/modify', carController.modify);
+router.put('/caroutside/modify', carController.modify);
 // 添加
 router.post('/caroutside/increase', carController.increase);
 // 详情

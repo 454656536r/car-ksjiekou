@@ -30,13 +30,31 @@ const deleteUser = (req, res) => {
     }
   })
 }
-// // 修改
-// const modify = (req, res) => {
-//     res.json({
-//         code: '200',
-//         msg: '已修改'
-//     })
-// }
+// 修改
+const modify = (req, res) => {
+  let id = req.query.id
+  console.log(id,8888888888);
+  let data = req.body;
+  console.log(data);
+  let list = getCarData();
+  let index = list.findIndex((item) => item.id == id);
+  console.log(index,123213);
+  if (index == -1) {
+    res.json({
+      code: 404,
+      msg: "未找到数据",
+    });
+  }
+  list[index] = {
+    ...list[index],
+    ...data,
+  };
+  witeData(list);
+  res.json({
+    code: 200,
+    msg: "ok",
+  });
+}
 
 // 详情
 const detail = (req, res) => {
@@ -84,13 +102,28 @@ const increase = (req, res) => {
 }
 function deleat() {
   let data = fs.readFileSync(path.join(__dirname, 'array.json'), 'utf-8')
-  //   console.log(JSON.parse(data).list);
   return data
 }
+const getCarData = (page = 1, size) => {
+  let data = fs.readFileSync(path.join(__dirname, "array.json"), "utf-8");
+  data = JSON.parse(data).data;
+  size = size || data.length;
+  if (page && size) {
+    data.data = data.slice((page - 1) * size, page * size);
+  }
+  return data;
+}
+const witeData = (data) => {
+  fs.writeFileSync(
+    path.join(__dirname, "array.json"), JSON.stringify({ data: data }))
+  return;
+}
+
+
 module.exports = {
   read,
   deleteUser,
-  // modify,
+  modify,
   increase,
   detail
 }
